@@ -65,8 +65,8 @@ src/main/resources/application-dev.properties
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # --- Dependencies ---
-/node_modules
-/.pnp
+/frontend/node_modules
+/frontend/.pnp
 .pnp.*
 .yarn/*
 !.yarn/patches
@@ -75,9 +75,9 @@ src/main/resources/application-dev.properties
 !.yarn/versions
 
 # --- Next.js ---
-/.next/
-/out/
-/build
+/frontend/.next/
+/frontend/out/
+/frontend/build
 next-env.d.ts
 .next
 # Next.js telemetry (optional)
@@ -93,11 +93,11 @@ next-env.d.ts
 !.env.example
 
 # --- Testing & Coverage ---
-/coverage
-/cypress/videos
-/cypress/screenshots
-/playwright-report
-/test-results
+/frontend/coverage
+/frontend/cypress/videos
+/frontend/cypress/screenshots
+/frontend/playwright-report
+/frontend/test-results
 
 # --- Logs ---
 npm-debug.log*
@@ -134,10 +134,3 @@ Thumbs.db
 # --- Misc ---
 *.pem
 *.png
-
-
-
-
-
-
-/frontend/node_modules
