@@ -28,7 +28,7 @@ export default function ChatPage() {
 
         try {
             const res = await fetch(
-                `http://localhost:8080/api/simple-chat?message=${encodeURIComponent(text)}`,
+                `http://localhost:8080/api/v2/simple-chat?message=${encodeURIComponent(text)}`,
                 {
                     headers: {
                         "Authorization": "Bearer YOUR_TOKEN",
