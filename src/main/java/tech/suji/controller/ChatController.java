@@ -1,11 +1,15 @@
 package tech.suji.controller;
 
+import static org.springframework.ai.chat.memory.ChatMemory.CONVERSATION_ID;
+
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.ChatClient.CallResponseSpec;
 import org.springframework.ai.chat.prompt.ChatOptions;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,4 +48,44 @@ public class ChatController {
 		return content;
 	}
 	// http://localhost:8080/api/chat?message=Hello
+	
+	
+	@GetMapping("/simple-chat")
+    public ResponseEntity<String> chatMemory(@RequestHeader("username") String username,
+            @RequestParam("message") String message) {
+		
+		String systemMessage = """
+				You should act like a human. You're name Sujith, age 27. You like Java and NextJs.
+				You stay in India/Telangana/Hyderabad.
+				Respond at most 100 words.
+				""";
+		
+		
+        return ResponseEntity.ok(basicChatClient.prompt().system(systemMessage).user(message).advisors(
+                    advisorSpec -> advisorSpec.param(CONVERSATION_ID, username)
+                )
+                .call().content());
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

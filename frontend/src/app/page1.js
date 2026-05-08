@@ -1,7 +1,6 @@
 import { ROUTES } from '@/features/dashboard/lib/routes';
 import Link from 'next/link';
 
-
 export default function ProjectDashboard() {
   return (
     <div className="container mx-auto p-8 m-10">
