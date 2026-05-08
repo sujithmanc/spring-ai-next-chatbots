@@ -1,0 +1,18 @@
+{
+  "project": "Student Management System",
+  "desc": "Track student profiles, courses and enrollment status",
+  "base_route": "students",
+  "schema_name": "students",
+  "view": ["fullName", "email", "grade", "enrolled"],
+  "fields": [
+    { "field": "fullName",    "type": "text",     "minSize": 2, "maxSize": 80,  "require": true },
+    { "field": "email",       "type": "text",     "minSize": 5, "maxSize": 120, "require": true },
+    { "field": "age",         "type": "number",   "min": 16,   "max": 40,      "require": true },
+    { "field": "dob",         "type": "date",     "min": "1980-01-01", "max": "2010-12-31" },
+    { "field": "grade",       "type": "dropdown", "options": ["A", "B", "C", "D", "F"], "require": true },
+    { "field": "gender",      "type": "radio",    "options": ["Male", "Female", "Other"], "require": true },
+    { "field": "courses",     "type": "checkbox", "options": ["Math", "Science", "English", "History"], "require": 2 },
+    { "field": "notes",       "type": "textarea" },
+    { "field": "enrolled",    "type": "switch",   "require": true }
+  ]
+}

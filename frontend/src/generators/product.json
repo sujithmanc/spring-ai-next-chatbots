@@ -1,0 +1,16 @@
+{
+  "project": "Product Catalog",
+  "desc": "Manage products, pricing and inventory",
+  "base_route": "products",
+  "schema_name": "products",
+  "view": ["name", "price", "category", "inStock"],
+  "fields": [
+    { "field": "name",        "type": "text",     "minSize": 3, "maxSize": 100, "require": true },
+    { "field": "price",       "type": "number",   "min": 0,    "max": 999999,  "require": true },
+    { "field": "category",    "type": "dropdown", "options": ["Electronics", "Clothing", "Food", "Books"], "require": true },
+    { "field": "description", "type": "textarea" },
+    { "field": "launchDate",  "type": "date",     "min": "2000-01-01", "max": "2030-12-31" },
+    { "field": "tags",        "type": "checkbox", "options": ["New", "Sale", "Featured", "Limited"], "require": 1 },
+    { "field": "inStock",     "type": "switch",   "require": true }
+  ]
+}

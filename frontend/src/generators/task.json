@@ -1,0 +1,17 @@
+{
+  "project": "Task Tracker",
+  "desc": "Manage tasks, priorities and team assignments",
+  "base_route": "tasks",
+  "schema_name": "tasks",
+  "view": ["title", "priority", "status", "dueDate"],
+  "fields": [
+    { "field": "title",       "type": "text",     "minSize": 3, "maxSize": 120, "require": true },
+    { "field": "description", "type": "textarea" },
+    { "field": "priority",    "type": "radio",    "options": ["Low", "Medium", "High"], "require": true },
+    { "field": "status",      "type": "dropdown", "options": ["Todo", "In Progress", "Review", "Done"], "require": true },
+    { "field": "dueDate",     "type": "date",     "min": "2024-01-01", "max": "2030-12-31", "require": true },
+    { "field": "tags",        "type": "checkbox", "options": ["Bug", "Feature", "Docs", "Urgent"] },
+    { "field": "estimatedHours", "type": "number", "min": 1, "max": 100 },
+    { "field": "completed",   "type": "switch" }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "project": "Hospital Doctor Registry",
+  "desc": "Manage doctor profiles, specializations and availability",
+  "base_route": "doctors",
+  "schema_name": "doctors",
+  "view": ["fullName", "specialization", "experience", "available"],
+  "fields": [
+    { "field": "fullName",       "type": "text",     "minSize": 3, "maxSize": 100, "require": true },
+    { "field": "experience",     "type": "number",   "min": 0,    "max": 50,      "require": true },
+    { "field": "specialization", "type": "dropdown", "options": ["Cardiology", "Neurology", "Orthopedics", "Pediatrics", "Dermatology"], "require": true },
+    { "field": "gender",         "type": "radio",    "options": ["Male", "Female"], "require": true },
+    { "field": "languages",      "type": "checkbox", "options": ["English", "Hindi", "Telugu", "Tamil"], "require": 1 },
+    { "field": "bio",            "type": "textarea" },
+    { "field": "joinDate",       "type": "date",     "min": "1990-01-01", "max": "2025-12-31" },
+    { "field": "available",      "type": "switch",   "require": true }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "project": "Employee Management System",
+  "desc": "Used to manage the whole employee system",
+  "base_route": "emp",
+  "schema_name": "employees",
+  "view": ["name", "age", "city"],
+  "fields": [
+    { "field": "Name",   "type": "text",     "minSize": 4, "maxSize": 16, "require": true },
+    { "field": "Age",    "type": "number",   "min": 18,   "max": 60,     "require": true },
+    { "field": "DOB",    "type": "date",     "min": "2000-01-01", "max": "2030-01-01" },
+    { "field": "desc",   "type": "textarea" },
+    { "field": "Gender", "type": "radio",    "options": ["Male", "Female"], "require": true },
+    { "field": "Skills", "type": "checkbox", "options": ["JavaScript", "Java", "Python"], "require": 2 },
+    { "field": "City",   "type": "dropdown", "options": ["Hyderabad", "Mumbai", "Delhi"], "require": true },
+    { "field": "Active", "type": "switch",   "require": true }
+  ]
+}

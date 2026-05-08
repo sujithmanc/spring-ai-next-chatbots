@@ -1,0 +1,18 @@
+{
+  "project": "Flash card Topics",
+  "desc": "Used to manage the whole employee system",
+  "base_route": "topics",
+  "schema_name": "topics",
+  "view": [
+    "name"
+  ],
+  "fields": [
+    {
+      "field": "Name",
+      "type": "text",
+      "minSize": 4,
+      "maxSize": 16,
+      "require": true
+    }
+  ]
+}

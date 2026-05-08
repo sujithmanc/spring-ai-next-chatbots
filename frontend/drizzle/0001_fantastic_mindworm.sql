@@ -1,0 +1,3 @@
+CREATE OR REPLACE ALGORITHM = undefined
+SQL SECURITY definer
+VIEW `documents_with_tags_view` AS (select `nodes`.`id`, `nodes`.`parent_id`, `nodes`.`user_id`, `nodes`.`name`, `tags`.`id`, `tags`.`name`, `document_contents`.`content` from `nodes` inner join `document_tags` on `nodes`.`id` = `document_tags`.`node_id` inner join `tags` on `document_tags`.`tag_id` = `tags`.`id` inner join `document_contents` on `nodes`.`id` = `document_contents`.`node_id`);

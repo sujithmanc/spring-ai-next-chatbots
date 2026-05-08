@@ -1,0 +1,18 @@
+{
+  "project": "Library Book Manager",
+  "desc": "Manage books, authors and borrowing status",
+  "base_route": "books",
+  "schema_name": "books",
+  "view": ["title", "author", "genre", "available"],
+  "fields": [
+    { "field": "title",       "type": "text",     "minSize": 2, "maxSize": 200, "require": true },
+    { "field": "author",      "type": "text",     "minSize": 2, "maxSize": 100, "require": true },
+    { "field": "pages",       "type": "number",   "min": 10,   "max": 5000,    "require": true },
+    { "field": "genre",       "type": "dropdown", "options": ["Fiction", "Non-Fiction", "Science", "History", "Biography"], "require": true },
+    { "field": "language",    "type": "radio",    "options": ["English", "Hindi", "Other"], "require": true },
+    { "field": "publishDate", "type": "date",     "min": "1900-01-01", "max": "2025-12-31" },
+    { "field": "tags",        "type": "checkbox", "options": ["Bestseller", "Award Winner", "Classic", "New Arrival"] },
+    { "field": "summary",     "type": "textarea" },
+    { "field": "available",   "type": "switch",   "require": true }
+  ]
+}
