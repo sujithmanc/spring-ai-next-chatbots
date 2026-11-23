@@ -86,13 +86,19 @@ export default function ChatTabs() {
         const text = input.trim();
         const conversationId = activeConversation?.id;
         if (!text || !conversationId || loadingIds.includes(conversationId)) return;
+        const promptMessageId = createConversationId();
 
         setConversations((previous) =>
             previous.map((conversation) =>
                 conversation.id === conversationId
                     ? {
                         ...conversation,
-                        messages: [...conversation.messages, { role: "user", text, ts: timestamp() }],
+                        messages: [...conversation.messages, {
+                            id: promptMessageId,
+                            role: "user",
+                            text,
+                            ts: timestamp(),
+                        }],
                     }
                     : conversation
             )
@@ -103,7 +109,7 @@ export default function ChatTabs() {
 
         try {
             const response = await fetch(
-                `http://localhost:8080/api/chat-memory?message=${encodeURIComponent(text)}`,
+                `http://localhost:8080/api/chat-memory/token-usage?message=${encodeURIComponent(text)}`,
                 {
                     headers: {
                         Authorization: "Bearer YOUR_TOKEN",
@@ -113,8 +119,37 @@ export default function ChatTabs() {
                 }
             );
             if (!response.ok) throw new Error(`Server error: ${response.status}`);
-            const responseText = await response.text();
-            appendBotMessage(conversationId, responseText || "No response received.");
+            const data = await response.json();
+            if (
+                typeof data?.message !== "string" ||
+                !Number.isFinite(data.promptTokens) ||
+                !Number.isFinite(data.completionTokens)
+            ) {
+                throw new Error("Invalid response received from server.");
+            }
+
+            setConversations((previous) =>
+                previous.map((conversation) =>
+                    conversation.id === conversationId
+                        ? {
+                            ...conversation,
+                            messages: [
+                                ...conversation.messages.map((message) =>
+                                    message.id === promptMessageId
+                                        ? { ...message, promptTokens: data.promptTokens }
+                                        : message
+                                ),
+                                {
+                                    role: "bot",
+                                    text: data.message,
+                                    completionTokens: data.completionTokens,
+                                    ts: timestamp(),
+                                },
+                            ],
+                        }
+                        : conversation
+                )
+            );
         } catch (error) {
             console.info(error);
             appendBotMessage(conversationId, `⚠️ ${error.message}`, true);
@@ -230,7 +265,7 @@ export default function ChatTabs() {
                     <main className="flex flex-1 flex-col gap-4 overflow-y-auto px-4 py-6">
                         {activeConversation?.messages.map((message, index) =>
                             message.role === "bot" ? (
-                                <div key={`${activeConversation.id}-${index}`} className="chat chat-start">
+                                <div key={message.id || `${activeConversation.id}-${index}`} className="chat chat-start">
                                     <div className="chat-image avatar avatar-placeholder">
                                         <div className="w-9 rounded-full bg-neutral text-neutral-content">
                                             <span>🤖</span>
@@ -240,10 +275,13 @@ export default function ChatTabs() {
                                     <div className={`chat-bubble ${message.error ? "chat-bubble-error" : "chat-bubble-neutral"}`}>
                                         {message.text}
                                     </div>
-                                    <div className="chat-footer mt-0.5 text-xs opacity-40">{message.ts}</div>
+                                    <div className="chat-footer mt-0.5 text-xs">
+                                        {message.ts}
+                                        {Number.isFinite(message.completionTokens) && <span>Completion Tokens: {message.completionTokens}</span>}
+                                    </div>
                                 </div>
                             ) : (
-                                <div key={`${activeConversation.id}-${index}`} className="chat chat-end">
+                                <div key={message.id || `${activeConversation.id}-${index}`} className="chat chat-end">
                                     <div className="chat-image avatar avatar-placeholder">
                                         <div className="w-9 rounded-full bg-primary text-primary-content">
                                             <span>🧑</span>
@@ -251,7 +289,10 @@ export default function ChatTabs() {
                                     </div>
                                     <div className="chat-header mb-0.5 text-xs opacity-50">You</div>
                                     <div className="chat-bubble chat-bubble-primary">{message.text}</div>
-                                    <div className="chat-footer mt-0.5 text-xs opacity-40">{message.ts}</div>
+                                    <div className="chat-footer mt-0.5 text-xs">
+                                        {message.ts}
+                                        {Number.isFinite(message.promptTokens) && <span>Prompt Tokens: {message.promptTokens}</span>}
+                                    </div>
                                 </div>
                             )
                         )}
