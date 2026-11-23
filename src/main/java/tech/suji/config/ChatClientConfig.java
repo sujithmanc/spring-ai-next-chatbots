@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 import tech.suji.advisor.JSONLogAdvisor;
+import tech.suji.advisor.TokenUsageAuditAdvisor;
 
 @Configuration
 public class ChatClientConfig {
@@ -46,11 +47,21 @@ public class ChatClientConfig {
 	
 	@Bean("chatMemoryChatClient")
     public ChatClient chatClient(OpenAiChatModel model, ChatMemory chatMemory) {
-        Advisor loggerAdvisor = new SimpleLoggerAdvisor();
-        Advisor jsonLoggerAdvisor = new JSONLogAdvisor();
+        //Advisor loggerAdvisor = new SimpleLoggerAdvisor();
+        //Advisor jsonLoggerAdvisor = new JSONLogAdvisor();
+		TokenUsageAuditAdvisor tokenUsageAuditAdvisor = new TokenUsageAuditAdvisor();
         Advisor memoryAdvisor = MessageChatMemoryAdvisor.builder(chatMemory).build();
         
-       return ChatClient.builder(model).defaultAdvisors(List.of(jsonLoggerAdvisor, memoryAdvisor)).build();
+       return ChatClient.builder(model).defaultAdvisors(List.of(tokenUsageAuditAdvisor, memoryAdvisor)).build();
     }
+	
+//	@Bean("chatMemoryChatClient")
+//    public ChatClient chatClient(OpenAiChatModel model, ChatMemory chatMemory) {
+//        Advisor loggerAdvisor = new SimpleLoggerAdvisor();
+//        Advisor jsonLoggerAdvisor = new JSONLogAdvisor();
+//        Advisor memoryAdvisor = MessageChatMemoryAdvisor.builder(chatMemory).build();
+//        
+//       return ChatClient.builder(model).defaultAdvisors(List.of(jsonLoggerAdvisor, memoryAdvisor)).build();
+//    }
 	
 }

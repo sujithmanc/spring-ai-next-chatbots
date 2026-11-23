@@ -1,14 +1,13 @@
 "use client";
 
-import { ROUTES } from "@/features/dashboard/lib/routes";
-import Link from "next/link";
-import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import NavLinks from "./navs/NavLinks";
 import Timer from "./Timer";
 import ThemeDropdown from "./ThemeDropdown";
 
 const NavBar04 = () => {
-
+  const pathname = usePathname();
+  const isChatbotPage = pathname === "/chatbot";
 
   return (
     <div className="navbar bg-base-100 shadow-sm sticky top-0 z-50">
@@ -35,6 +34,15 @@ const NavBar04 = () => {
         </ul>
       </div>
       <div className="navbar-end">
+        {isChatbotPage && (
+          <button
+            type="button"
+            className="btn btn-primary btn-sm mr-2"
+            onClick={() => window.dispatchEvent(new Event("chat:add"))}
+          >
+            Add Chat
+          </button>
+        )}
         <Timer />
         <ThemeDropdown />
       </div>
