@@ -64,12 +64,24 @@
             <scope>provided</scope>
         </dependency>
         
-        <!-- Enables Docker Compose support -->
+        <!-- START: Enables Docker Compose support -->
         <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-docker-compose</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		<!-- END: Enables Docker Compose support -->
+		
+		<!-- START: Setup QDRANT Vector Database -->
+		<dependency>
+			<groupId>org.springframework.ai</groupId>
+			<artifactId>spring-ai-rag</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.ai</groupId>
+			<artifactId>spring-ai-starter-vector-store-qdrant</artifactId>
+		</dependency>
+		<!-- END: Setup QDRANT Vector Database -->
 		
         <dependency>
 	      <groupId>org.springframework.boot</groupId>
